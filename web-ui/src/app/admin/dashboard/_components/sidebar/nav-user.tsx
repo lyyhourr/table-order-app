@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,19 +16,15 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/hooks/use-auth";
 import { ChevronsUpDown, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 
 export default function NavUser() {
   const { isMobile } = useSidebar();
+  const { user } = useAuth();
 
-  const user = {
-    fullName: "John Doe",
-    username: "johndoe",
-    profilePicture: null,
-  };
-
-  const initials = user?.fullName[0];
+  const initials = user?.username[0];
 
   return (
     <SidebarMenu>
@@ -40,18 +36,18 @@ export default function NavUser() {
               className="data-[state=open]:bg-muted data-[state=open]:text-foreground/90"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                {user?.profilePicture && (
+                {/* {user?.profilePicture && (
                   <AvatarImage
                     src={user.profilePicture}
                     alt="Profile Picture"
                   />
-                )}
+                )} */}
                 <AvatarFallback className="rounded-lg capitalize">
                   {initials}
                 </AvatarFallback>
               </Avatar>
               <div className="ml-2 flex flex-col text-left text-sm">
-                <span className="font-medium truncate">{user?.fullName}</span>
+                <span className="font-medium truncate">{user?.username}</span>
                 <span className="text-xs text-muted-foreground truncate">
                   @{user?.username}
                 </span>
@@ -69,19 +65,19 @@ export default function NavUser() {
             <DropdownMenuLabel className="p-0">
               <div className="flex items-center gap-3 px-4 py-3">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  {user?.profilePicture && (
+                  {/* {user?.profilePicture && (
                     <AvatarImage
                       src={user.profilePicture}
                       alt="Profile Picture"
                     />
-                  )}
+                  )} */}
                   <AvatarFallback className="rounded-lg capitalize">
                     {initials}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col gap-0.5 text-sm">
                   <span className="font-semibold truncate">
-                    {user?.fullName}
+                    {user?.username}
                   </span>
                   <span className="text-xs text-muted-foreground truncate">
                     @{user?.username}

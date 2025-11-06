@@ -131,7 +131,7 @@ class ApiClient {
 }
 
 const api = new ApiClient(process.env.NEXT_PUBLIC_BASE_API_URL!, {
-  onUnauthorized: () => redirect("/unauthorized"),
+  onUnauthorized: () => redirect("/admin/unauthorized"),
 });
 
 export { ApiClient };

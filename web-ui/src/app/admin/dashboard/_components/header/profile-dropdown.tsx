@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,26 +10,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/use-auth";
 import { LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 
 export default function ProfileDropdown() {
-  const user = {
-    fullName: "John Doe",
-    username: "johndoe",
-    profilePicture: "",
-  };
+  const { user } = useAuth();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            {user?.profilePicture && (
+            {/* {user?.profilePicture && (
               <AvatarImage src={user.profilePicture} alt="Profile Picture" />
-            )}
+            )} */}
             <AvatarFallback className="capitalize">
-              {user.fullName[0]}
+              {user?.username[0]}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -41,7 +38,7 @@ export default function ProfileDropdown() {
             <p className="text-base font-semibold leading-none">
               @{user?.username}
             </p>
-            <p className="text-sm text-muted-foreground">{user?.fullName}</p>
+            <p className="text-sm text-muted-foreground">{user?.username}</p>
           </div>
         </DropdownMenuLabel>
 
