@@ -20,6 +20,7 @@ public class User {
 
     @NotBlank()
     @Size(min = 3, max = 100)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @JsonIgnore

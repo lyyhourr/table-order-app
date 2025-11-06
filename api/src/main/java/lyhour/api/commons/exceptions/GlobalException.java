@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.EntityNotFoundException;
 import lyhour.api.commons.dtos.responses.BaseResponseDto;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -72,4 +73,25 @@ public class GlobalException {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(BaseResponseDto.fail(500, "Server error: " + ex.getMessage()));
     }
+
+    @Hidden
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<BaseResponseDto<Void>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        String message = "Some fields already exists.";
+
+        if (ex.getCause() != null && ex.getCause().getMessage() != null) {
+            String causeMsg = ex.getCause().getMessage();
+            int start = causeMsg.indexOf('(');
+            int end = causeMsg.indexOf(')');
+            if (start != -1 && end != -1 && end > start) {
+                String fieldName = causeMsg.substring(start + 1, end);
+                message = fieldName + " already exists";
+            }
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(BaseResponseDto.fail(HttpStatus.BAD_REQUEST.value(), message));
+    }
+
 }

@@ -20,13 +20,9 @@ public class AuthService {
     }
 
     public AuthResponseDto register(String username, String rawPassword) {
-        User existingUser = userService.findByUsername(username);
-        if (existingUser != null) {
-            throw new IllegalArgumentException("Username already exists");
-        }
 
         String hashedPassword = passwordEncoder.encode(rawPassword);
-        User user = userService.registerUser(username, hashedPassword);
+        User user = userService.create(username, hashedPassword);
 
         String token = jwtService.generateToken(user);
 

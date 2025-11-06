@@ -33,11 +33,20 @@ public class BaseResponseDto<T> {
         return data;
     }
 
+    public static <T> BaseResponseDto<T> success(T data) {
+        return success(data, "success");
+    }
+
     public static <T> BaseResponseDto<T> success(T data, String message) {
         return new BaseResponseDto<>(true, 200, message, data);
+    }
+
+    public static <T> BaseResponseDto<T> fail(int status) {
+        return fail(status, "error");
     }
 
     public static <T> BaseResponseDto<T> fail(int status, String message) {
         return new BaseResponseDto<>(false, status, message, null);
     }
+
 }
