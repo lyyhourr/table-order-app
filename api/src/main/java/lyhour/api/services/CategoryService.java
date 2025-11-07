@@ -3,6 +3,8 @@ package lyhour.api.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +22,8 @@ public class CategoryService {
     }
 
     public List<Category> findAll() {
-        return categoryRepository.findAll();
+        return categoryRepository.findAll(Sort
+                .by(Direction.DESC, "createdAt"));
     }
 
     public Optional<Category> findById(Long id) {

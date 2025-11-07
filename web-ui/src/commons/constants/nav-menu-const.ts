@@ -25,15 +25,15 @@ export const NAVIGATION_MENU: TNavigationMenu[] = [
       {
         label: "Menu",
         icon: Pizza,
-        href: "/admin/menu",
+        href: "/admin/dashboard/menu",
         items: [
           {
-            href: "/admin/menu/categories",
+            href: "/admin/dashboard/menu/category",
             label: "Categories",
             icon: List,
           },
           {
-            href: "/admin/menu/items",
+            href: "/admin/dashboard/menu/items",
             label: "Menu Items",
             icon: Coffee,
           },
