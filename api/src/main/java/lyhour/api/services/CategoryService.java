@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lyhour.api.commons.dtos.requests.CategoryDto;
+import lyhour.api.commons.dtos.responses.BaseSelectDto;
 import lyhour.api.entities.Category;
 import lyhour.api.repositories.CategoryRepository;
 
@@ -24,6 +25,10 @@ public class CategoryService {
     public List<Category> findAll() {
         return categoryRepository.findAll(Sort
                 .by(Direction.DESC, "createdAt"));
+    }
+
+    public List<BaseSelectDto> getSelect() {
+        return categoryRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public Optional<Category> findById(Long id) {

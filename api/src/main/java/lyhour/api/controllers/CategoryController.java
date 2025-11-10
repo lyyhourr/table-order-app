@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lyhour.api.commons.dtos.requests.CategoryDto;
 import lyhour.api.commons.dtos.responses.BaseResponseDto;
+import lyhour.api.commons.dtos.responses.BaseSelectDto;
 import lyhour.api.entities.Category;
 import lyhour.api.services.CategoryService;
 
@@ -32,6 +33,12 @@ public class CategoryController {
     @GetMapping
     public BaseResponseDto<List<Category>> findAll() {
         List<Category> categories = categoryService.findAll();
+        return BaseResponseDto.success(categories);
+    }
+
+    @GetMapping("select")
+    public BaseResponseDto<List<BaseSelectDto>> select() {
+        List<BaseSelectDto> categories = categoryService.getSelect();
         return BaseResponseDto.success(categories);
     }
 

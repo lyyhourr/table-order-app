@@ -91,7 +91,7 @@ export default function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link
-                  href="/dashboard/profile"
+                  href="/admin/dashboard"
                   className="flex items-center gap-2"
                 >
                   <User className="h-4 w-4" />
@@ -100,7 +100,7 @@ export default function NavUser() {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href="/dashboard/settings"
+                  href="/admin/dashboard"
                   className="flex items-center gap-2"
                 >
                   <Settings className="h-4 w-4" />

@@ -47,7 +47,7 @@ export default function ProfileDropdown() {
         <div className="p-1">
           <DropdownMenuItem asChild>
             <Link
-              href="/dashboard/profile"
+              href="/admin/dashboard"
               className="flex items-center gap-2 cursor-pointer"
             >
               <User className="h-4 w-4" />
@@ -57,7 +57,7 @@ export default function ProfileDropdown() {
 
           <DropdownMenuItem asChild>
             <Link
-              href="/dashboard/settings"
+              href="/admin/dashboard"
               className="flex items-center gap-2 cursor-pointer"
             >
               <Settings className="h-4 w-4" />

@@ -3,3 +3,8 @@ export type TBaseFormProps<TSchema, TData> = {
   handleSubmit: (payload: TSchema) => void;
   onClose?: () => void;
 };
+
+export type TBaseSelect = {
+  id: number;
+  name: string;
+};

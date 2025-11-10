@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
+import { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -42,7 +43,7 @@ export default function NavMain() {
                       isActive={item.href === pathname}
                     >
                       <Link
-                        href={item.href}
+                        href={item.href as Route}
                         onClick={() => {
                           if (isMobile) toggleSidebar();
                         }}
@@ -86,7 +87,7 @@ export default function NavMain() {
                                 isActive={subItem.href === pathname}
                               >
                                 <Link
-                                  href={subItem.href}
+                                  href={subItem.href as Route}
                                   onClick={() => {
                                     if (isMobile) toggleSidebar();
                                   }}
@@ -112,7 +113,7 @@ export default function NavMain() {
                     isActive={item.href === pathname}
                   >
                     <Link
-                      href={item.href}
+                      href={item.href as Route}
                       onClick={() => {
                         if (isMobile) toggleSidebar();
                       }}
