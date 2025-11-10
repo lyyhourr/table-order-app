@@ -30,7 +30,7 @@ public class OrderTableController {
         this.orderTableService = orderTableService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public BaseResponseDto<List<OrderTable>> findAll() {
         List<OrderTable> data = orderTableService.findAll();
         return BaseResponseDto.success(data);
@@ -48,7 +48,7 @@ public class OrderTableController {
         return BaseResponseDto.success(orderTable, "Success");
     }
 
-    @PostMapping("/")
+    @PostMapping
     public BaseResponseDto<OrderTable> create(@RequestBody @Valid OrderTableDto orderTableDto) {
         OrderTable data = orderTableService.create(orderTableDto);
         return BaseResponseDto.success(data);

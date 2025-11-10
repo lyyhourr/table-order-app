@@ -8,6 +8,7 @@ import {
   Pizza,
   Settings,
   ShoppingCart,
+  Table,
   Users,
 } from "lucide-react";
 
@@ -38,6 +39,13 @@ export const NAVIGATION_MENU: TNavigationMenu[] = [
             icon: Coffee,
           },
         ],
+      },
+
+      {
+        label: "Table",
+        icon: Table,
+        href: "/admin/dashboard/tables",
+        items: null,
       },
 
       {

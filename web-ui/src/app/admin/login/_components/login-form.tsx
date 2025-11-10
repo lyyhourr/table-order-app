@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { errorToast } from "@/components/ui/toast";
 import api from "@/lib/api-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CupSoda } from "lucide-react";
@@ -48,7 +49,7 @@ export default function LoginForm() {
     );
 
     if (!success) {
-      alert(message);
+      errorToast(message);
       return;
     }
 
