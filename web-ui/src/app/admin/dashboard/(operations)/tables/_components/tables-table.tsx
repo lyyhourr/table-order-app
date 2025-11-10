@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { TTable } from "../_utils/table-schema";
 import CreateTableModal from "./create-table-modal";
 import UpdateTableModal from "./update-category-modal";
+import PrintTableQrModal from "./print-table-qr-modal";
 
 export default function TablesTable({ data }: { data: TTable[] }) {
   const router = useRouter();
@@ -43,6 +44,7 @@ export default function TablesTable({ data }: { data: TTable[] }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <UpdateTableModal data={row.original} />
+            <PrintTableQrModal data={row.original} />
             <ConfirmDeleteDialog
               onConfirm={() => onConfirmDelete(row.original.id)}
             />
