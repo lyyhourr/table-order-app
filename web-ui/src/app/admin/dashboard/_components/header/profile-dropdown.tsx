@@ -15,16 +15,13 @@ import { LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 
 export default function ProfileDropdown() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            {/* {user?.profilePicture && (
-              <AvatarImage src={user.profilePicture} alt="Profile Picture" />
-            )} */}
             <AvatarFallback className="capitalize">
               {user?.username[0]}
             </AvatarFallback>
@@ -69,7 +66,10 @@ export default function ProfileDropdown() {
         <DropdownMenuSeparator />
 
         <div className="p-1">
-          <DropdownMenuItem className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer">
+          <DropdownMenuItem
+            onClick={logout}
+            className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer"
+          >
             <LogOut className="h-4 w-4" />
             <span>Logout</span>
           </DropdownMenuItem>

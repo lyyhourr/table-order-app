@@ -5,7 +5,7 @@ import TablesTable from "./_components/tables-table";
 import { TTable } from "./_utils/table-schema";
 
 export const metadata: Metadata = {
-  title: "Tables Items",
+  title: "Tables",
 };
 
 export default async function Page() {

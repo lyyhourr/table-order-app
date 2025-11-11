@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lyhour.api.commons.dtos.responses.BaseResponseDto;
+import lyhour.api.entities.Category;
 import lyhour.api.entities.MenuItem;
 import lyhour.api.services.UserMenuService;
 
@@ -22,8 +23,13 @@ public class UserMenuController {
         this.userMenuService = userMenuService;
     }
 
-    @GetMapping("/")
-    public BaseResponseDto<List<MenuItem>> getAllMenuItems() {
+    @GetMapping()
+    public BaseResponseDto<List<MenuItem>> findAll() {
         return BaseResponseDto.success(userMenuService.getAllMenuItems(), "Success");
+    }
+
+    @GetMapping("/categories")
+    public BaseResponseDto<List<Category>> getAllCategory() {
+        return BaseResponseDto.success(userMenuService.getAllCategory(), "Success");
     }
 }
