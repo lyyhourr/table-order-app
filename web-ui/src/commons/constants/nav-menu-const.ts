@@ -1,15 +1,11 @@
 import {
-  BarChart3,
   Coffee,
-  CreditCard,
   LayoutDashboard,
   List,
   LucideProps,
   Pizza,
-  Settings,
   ShoppingCart,
   Table,
-  Users,
 } from "lucide-react";
 
 export const NAVIGATION_MENU: TNavigationMenu[] = [
@@ -22,7 +18,6 @@ export const NAVIGATION_MENU: TNavigationMenu[] = [
         href: "/admin/dashboard",
         items: null,
       },
-
       {
         label: "Menu",
         icon: Pizza,
@@ -40,7 +35,6 @@ export const NAVIGATION_MENU: TNavigationMenu[] = [
           },
         ],
       },
-
       {
         label: "Table",
         icon: Table,
@@ -64,59 +58,6 @@ export const NAVIGATION_MENU: TNavigationMenu[] = [
             icon: ShoppingCart,
           },
         ],
-      },
-
-      {
-        label: "Payments",
-        icon: CreditCard,
-        href: "/admin/payments",
-        items: [
-          {
-            href: "/admin/payments/pending",
-            label: "Pending Payments",
-            icon: CreditCard,
-          },
-          {
-            href: "/admin/payments/completed",
-            label: "Completed Payments",
-            icon: CreditCard,
-          },
-        ],
-      },
-    ],
-  },
-
-  {
-    title: "Management",
-    data: [
-      {
-        label: "Users",
-        icon: Users,
-        href: "/admin/users",
-        items: null,
-      },
-      {
-        label: "Reports",
-        icon: BarChart3,
-        href: "/admin/reports",
-        items: [
-          {
-            href: "/admin/reports/sales",
-            label: "Sales Report",
-            icon: BarChart3,
-          },
-          {
-            href: "/admin/reports/menu",
-            label: "Menu Performance",
-            icon: BarChart3,
-          },
-        ],
-      },
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/admin/settings",
-        items: null,
       },
     ],
   },
