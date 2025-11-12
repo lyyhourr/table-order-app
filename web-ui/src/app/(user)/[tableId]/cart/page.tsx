@@ -38,7 +38,7 @@ export default function CartPage() {
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
               </Link>
-              <h1 className="text-xl font-bold text-gray-900">Shopping Cart</h1>
+              <h1 className="text-xl font-bold text-gray-900">Order Items</h1>
             </div>
           </header>
 
@@ -54,7 +54,7 @@ export default function CartPage() {
             </p>
             <Link href={`/${tableId}`}>
               <Button className="bg-red-500 hover:bg-red-600 text-white px-8">
-                Start Shopping
+                Start Order
               </Button>
             </Link>
           </div>
@@ -78,7 +78,7 @@ export default function CartPage() {
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
               </Link>
-              <h1 className="text-xl font-bold text-gray-900">Shopping Cart</h1>
+              <h1 className="text-xl font-bold text-gray-900">Order Items</h1>
             </div>
             <Button
               variant="ghost"
