@@ -45,19 +45,8 @@ export const NAVIGATION_MENU: TNavigationMenu[] = [
       {
         label: "Orders",
         icon: ShoppingCart,
-        href: "/admin/orders",
-        items: [
-          {
-            href: "/admin/orders/pending",
-            label: "Pending Orders",
-            icon: ShoppingCart,
-          },
-          {
-            href: "/admin/orders/completed",
-            label: "Completed Orders",
-            icon: ShoppingCart,
-          },
-        ],
+        href: "/admin/dashboard/orders",
+        items: null,
       },
     ],
   },

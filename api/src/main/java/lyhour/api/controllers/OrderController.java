@@ -28,9 +28,8 @@ public class OrderController {
     }
 
     @GetMapping
-    public BaseResponseDto<List<OrderResponse>> findAllByStatus(
-            @RequestParam(name = "status", required = false, defaultValue = "PENDING") OrderStatus status) {
-        List<OrderResponse> orders = orderService.getOrdersByStatus(status);
+    public BaseResponseDto<List<OrderResponse>> findAll() {
+        List<OrderResponse> orders = orderService.getOrdersByStatus();
         return BaseResponseDto.success(orders);
     }
 

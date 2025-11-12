@@ -22,8 +22,8 @@ public class OrderService {
                 this.orderRepository = orderRepository;
         }
 
-        public List<OrderResponse> getOrdersByStatus(OrderStatus status) {
-                List<Order> orders = orderRepository.findByStatus(status);
+        public List<OrderResponse> getOrdersByStatus() {
+                List<Order> orders = orderRepository.findAllByOrderByCreatedAtDesc();
 
                 return orders.stream()
                                 .map(order -> new OrderResponse(

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { PencilLineIcon } from "lucide-react";
 
 interface CreateButtonProps extends ButtonProps {
-  label?: boolean;
+  label?: string;
 }
 
 export default function UpdateButton({ label, ...props }: CreateButtonProps) {
