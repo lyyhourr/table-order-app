@@ -29,7 +29,11 @@ type MenuItem = {
 };
 
 export default function Page() {
-  const { addItem, totalItems } = useCart();
+  const addItem = useCart((state) => state.addItem);
+  const totalItems = useCart((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0)
+  );
+
   const [menuItems, setMenuItems] = React.useState<MenuItem[]>([]);
   const [categoryList, setCategoryList] = React.useState<Category[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -104,6 +108,7 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-md bg-white min-h-screen relative">
+        {/* HEADER */}
         <header className="sticky top-0 z-50 bg-white px-4 py-4 border-b border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -134,6 +139,7 @@ export default function Page() {
           </div>
         </header>
 
+        {/* CATEGORY NAV */}
         <nav className="sticky top-[116px] z-40 bg-white border-b border-gray-200 shadow-sm">
           <div className="flex gap-2 overflow-x-auto px-4 py-3 scrollbar-hide">
             {categoryList.map((category) => (
@@ -156,6 +162,7 @@ export default function Page() {
           </div>
         </nav>
 
+        {/* PRODUCT LIST */}
         <main className="px-4 py-4 pb-24">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Products</h2>
 
@@ -210,19 +217,6 @@ export default function Page() {
                         </div>
 
                         <div className="space-y-2">
-                          <div className="flex items-center gap-3 text-xs">
-                            <div className="flex items-center gap-1">
-                              <span className="text-yellow-500">⭐</span>
-                              <span className="font-medium text-gray-900">
-                                4.8
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-1 text-gray-500">
-                              <span>🕐</span>
-                              <span>15min</span>
-                            </div>
-                          </div>
-
                           <h3 className="font-semibold text-gray-900 leading-tight text-sm line-clamp-1">
                             {item.name}
                           </h3>
@@ -264,7 +258,7 @@ export default function Page() {
                 className="flex flex-col items-center gap-1 text-gray-400"
               >
                 <HomeIcon className="w-6 h-6" />
-                <span className="text-xs font-medium ">Home</span>
+                <span className="text-xs font-medium">Home</span>
               </Link>
 
               <Link

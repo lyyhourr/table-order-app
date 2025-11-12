@@ -10,18 +10,17 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function CartPage() {
-  const {
-    items,
-    removeItem,
-    updateQuantity,
-    clearCart,
-    totalItems,
-    totalPrice,
-  } = useCart();
+  const { items, removeItem, updateQuantity, clearCart } = useCart();
+  const totalItems = useCart((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0)
+  );
+  const totalPrice = useCart((state) =>
+    state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  );
   const { tableId } = useParams<{ tableId?: string }>();
 
   if (!tableId) {
-    return <p>table not found</p>;
+    return <p>Table not found</p>;
   }
 
   if (items.length === 0) {
@@ -53,7 +52,7 @@ export default function CartPage() {
             <p className="text-gray-500 text-center mb-8">
               Looks like you haven&apos;t added any items to your cart yet
             </p>
-            <Link href="/">
+            <Link href={`/${tableId}`}>
               <Button className="bg-red-500 hover:bg-red-600 text-white px-8">
                 Start Shopping
               </Button>
@@ -129,6 +128,7 @@ export default function CartPage() {
                             updateQuantity(item.id, item.quantity - 1)
                           }
                           className="h-7 w-7 rounded-full bg-white flex items-center justify-center hover:bg-gray-50 transition-colors"
+                          disabled={item.quantity <= 1}
                         >
                           <Minus className="h-3 w-3 text-gray-600" />
                         </button>
@@ -171,7 +171,7 @@ export default function CartPage() {
             </div>
 
             <Button className="w-full bg-red-500 hover:bg-red-600 text-white py-6 text-base font-semibold rounded-xl">
-              Proceed to Checkout
+              Order Now - ${totalPrice.toFixed(2)}
             </Button>
           </div>
         </div>
