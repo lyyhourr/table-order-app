@@ -21,14 +21,17 @@ public class UserOrderService {
     private final OrderRepository orderRepository;
     private final MenuItemRepository menuItemRepository;
     private final OrderTableRepository orderTableRepository;
+    private final TelegramService telegramService;
 
     public UserOrderService(
             OrderRepository orderRepository,
             MenuItemRepository menuItemRepository,
-            OrderTableRepository orderTableRepository) {
+            OrderTableRepository orderTableRepository,
+            TelegramService telegramService) {
         this.orderRepository = orderRepository;
         this.menuItemRepository = menuItemRepository;
         this.orderTableRepository = orderTableRepository;
+        this.telegramService = telegramService;
     }
 
     @Transactional
@@ -42,22 +45,39 @@ public class UserOrderService {
 
         BigDecimal total = BigDecimal.ZERO;
 
+        order.setTotalPrice(total);
+        Order savedOrder = orderRepository.save(order);
+
+        StringBuilder message = new StringBuilder("🍽️ <b>New Order Received</b>\n");
+        message.append("<b>Order ID:</b> ").append(savedOrder.getId())
+                .append("  <b>Table:</b> ").append(table.getName()).append("\n\n");
+
         for (CreateOrderDto.OrderItemDTO itemDto : dto.getItems()) {
             MenuItem menuItem = menuItemRepository.findById(itemDto.getProductId())
                     .orElseThrow(() -> new RuntimeException("Menu item not found"));
 
             OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
+            orderItem.setOrder(savedOrder);
             orderItem.setMenuItem(menuItem);
             orderItem.setQuantity(itemDto.getQuantity());
             orderItem.setPrice(menuItem.getPrice());
 
             total = total.add(orderItem.getSubTotal());
-            order.getOrderItems().add(orderItem);
+            savedOrder.getOrderItems().add(orderItem);
+
+            message.append("- ").append(menuItem.getName())
+                    .append(" × ").append(itemDto.getQuantity())
+                    .append(" = $").append(orderItem.getSubTotal())
+                    .append("\n");
         }
 
-        order.setTotalPrice(total);
-        return orderRepository.save(order).getId();
-    }
+        savedOrder.setTotalPrice(total);
+        orderRepository.save(savedOrder);
 
+        message.append("\n💰 <b>Total Price:</b> $").append(total);
+
+        telegramService.sendMessage(message.toString());
+
+        return savedOrder.getId();
+    }
 }
