@@ -3,14 +3,13 @@ import {
   LayoutDashboard,
   List,
   LucideProps,
-  Pizza,
   ShoppingCart,
   Table,
 } from "lucide-react";
 
 export const NAVIGATION_MENU: TNavigationMenu[] = [
   {
-    title: "Operations",
+    title: "Menu",
     data: [
       {
         label: "Dashboard",
@@ -19,21 +18,16 @@ export const NAVIGATION_MENU: TNavigationMenu[] = [
         items: null,
       },
       {
-        label: "Menu",
-        icon: Pizza,
-        href: "/admin/dashboard/menu",
-        items: [
-          {
-            href: "/admin/dashboard/menu/category",
-            label: "Categories",
-            icon: List,
-          },
-          {
-            href: "/admin/dashboard/menu/items",
-            label: "Menu Items",
-            icon: Coffee,
-          },
-        ],
+        label: "Categories",
+        href: "/admin/dashboard/category",
+        icon: List,
+        items: null,
+      },
+      {
+        label: "Menu Items",
+        href: "/admin/dashboard/items",
+        icon: Coffee,
+        items: null,
       },
       {
         label: "Table",

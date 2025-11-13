@@ -50,7 +50,7 @@ export default function MenuItemTable({ data }: { data: TMenuItemList[] }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <Link href={`/admin/dashboard/menu/items/edit/${row.original.id}`}>
+            <Link href={`/admin/dashboard/items/edit/${row.original.id}`}>
               <UpdateButton />
             </Link>
 
@@ -94,7 +94,7 @@ export default function MenuItemTable({ data }: { data: TMenuItemList[] }) {
       data={data}
       topToolBar={{
         rightSection: (
-          <Link href="/admin/dashboard/menu/items/create">
+          <Link href="/admin/dashboard/items/create">
             <CreateButton />
           </Link>
         ),
