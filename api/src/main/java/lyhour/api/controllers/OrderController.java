@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import lyhour.api.commons.dtos.responses.BaseResponseDto;
 import lyhour.api.commons.dtos.responses.OrderResponse;
+import lyhour.api.commons.dtos.responses.OrderStatusResponseDto;
 import lyhour.api.entities.OrderStatus;
 import lyhour.api.services.OrderService;
 
@@ -48,4 +49,11 @@ public class OrderController {
         Map<String, Object> summary = orderService.getDashboardSummary();
         return BaseResponseDto.success(summary);
     }
+
+    @GetMapping("/status-summary")
+    public BaseResponseDto<List<OrderStatusResponseDto>> getOrderStatusSummary() {
+        List<OrderStatusResponseDto> data = orderService.getOrderStatusCounts();
+        return BaseResponseDto.success(data);
+    }
+
 }

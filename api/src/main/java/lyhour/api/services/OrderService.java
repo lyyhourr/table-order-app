@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import lyhour.api.commons.dtos.responses.OrderItemResponse;
 import lyhour.api.commons.dtos.responses.OrderResponse;
+import lyhour.api.commons.dtos.responses.OrderStatusResponseDto;
 import lyhour.api.entities.Order;
 import lyhour.api.entities.OrderStatus;
 import lyhour.api.repositories.MenuItemRepository;
 import lyhour.api.repositories.OrderRepository;
+import lyhour.api.repositories.OrderRepository.OrderStatusProjection;
 import lyhour.api.repositories.OrderTableRepository;
 
 @Service
@@ -92,4 +94,21 @@ public class OrderService {
 
                 return summary;
         }
+
+        public List<OrderStatusResponseDto> getOrderStatusCounts() {
+                List<OrderStatusProjection> projections = orderRepository.countOrdersByStatus();
+
+                return projections.stream()
+                                .map(p -> new OrderStatusResponseDto(
+                                                p.getStatus(),
+                                                p.getValue()))
+                                .collect(Collectors.toList());
+        }
+
+        public BigDecimal getTotalIncome() {
+                return orderRepository.findAll().stream()
+                                .map(Order::getTotalPrice)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+
 }

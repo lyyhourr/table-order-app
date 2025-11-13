@@ -19,4 +19,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.status = :status")
     Optional<BigDecimal> sumTotalPriceByStatus(@Param("status") OrderStatus status);
+
+    public interface OrderStatusProjection {
+        String getStatus();
+
+        Long getValue();
+    }
+
+    @Query("SELECT o.status as status, COUNT(o) as value FROM Order o GROUP BY o.status")
+    List<OrderStatusProjection> countOrdersByStatus();
+
 }
