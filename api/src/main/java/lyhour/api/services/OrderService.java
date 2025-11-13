@@ -1,6 +1,9 @@
 package lyhour.api.services;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -11,15 +14,23 @@ import lyhour.api.commons.dtos.responses.OrderItemResponse;
 import lyhour.api.commons.dtos.responses.OrderResponse;
 import lyhour.api.entities.Order;
 import lyhour.api.entities.OrderStatus;
+import lyhour.api.repositories.MenuItemRepository;
 import lyhour.api.repositories.OrderRepository;
+import lyhour.api.repositories.OrderTableRepository;
 
 @Service
 public class OrderService {
 
         private final OrderRepository orderRepository;
+        private final MenuItemRepository menuItemRepository;
+        private final OrderTableRepository orderTableRepository;
 
-        public OrderService(OrderRepository orderRepository) {
+        public OrderService(OrderRepository orderRepository,
+                        MenuItemRepository menuItemRepository,
+                        OrderTableRepository orderTableRepository) {
                 this.orderRepository = orderRepository;
+                this.menuItemRepository = menuItemRepository;
+                this.orderTableRepository = orderTableRepository;
         }
 
         public List<OrderResponse> getOrdersByStatus() {
@@ -63,5 +74,22 @@ public class OrderService {
                                                                                         i.getSubTotal()))
                                                                         .collect(Collectors.toList()));
                                 });
+        }
+
+        public Map<String, Object> getDashboardSummary() {
+                Map<String, Object> summary = new HashMap<>();
+
+                BigDecimal totalIncome = orderRepository.sumTotalPriceByStatus(OrderStatus.COMPLETED)
+                                .orElse(BigDecimal.ZERO);
+                long totalOrders = orderRepository.count();
+                long totalMenuItems = menuItemRepository.count();
+                long totalTables = orderTableRepository.count();
+
+                summary.put("totalIncome", totalIncome);
+                summary.put("totalOrders", totalOrders);
+                summary.put("totalMenuItems", totalMenuItems);
+                summary.put("totalTables", totalTables);
+
+                return summary;
         }
 }

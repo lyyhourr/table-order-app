@@ -1,6 +1,7 @@
 package lyhour.api.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,5 +41,11 @@ public class OrderController {
         return orderService.updateOrderStatus(id, newStatus)
                 .map(updated -> BaseResponseDto.success(updated))
                 .orElse(BaseResponseDto.fail(404, "Order not found"));
+    }
+
+    @GetMapping("/stats")
+    public BaseResponseDto<Map<String, Object>> getSummary() {
+        Map<String, Object> summary = orderService.getDashboardSummary();
+        return BaseResponseDto.success(summary);
     }
 }
