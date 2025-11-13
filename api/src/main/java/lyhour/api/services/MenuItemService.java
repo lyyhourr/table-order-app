@@ -25,7 +25,7 @@ public class MenuItemService {
     }
 
     public List<MenuItem> findAll() {
-        return menuItemRepository.findAll();
+        return menuItemRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public MenuItem findOne(Long id) {

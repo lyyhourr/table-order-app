@@ -19,7 +19,7 @@ export default function CreateMenuItemForm() {
     }
 
     successToast("Menu item created");
-    router.push("/admin/dashboard/menu/items");
+    router.push("/admin/dashboard/items");
   }
   return <MenuItemForm data={null} handleSubmit={createMenuItemForm} />;
 }

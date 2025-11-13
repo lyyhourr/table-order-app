@@ -19,7 +19,7 @@ export default function EditMenuItemForm({ data }: { data: TMenuItemList }) {
     }
 
     successToast("Menu item updated");
-    router.push("/admin/dashboard/menu/items");
+    router.push("/admin/dashboard/items");
   }
   return <MenuItemForm data={data} handleSubmit={editMenuItem} />;
 }

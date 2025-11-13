@@ -15,6 +15,7 @@ import jakarta.validation.constraints.NotNull;
 import lyhour.api.commons.dtos.responses.BaseResponseDto;
 import lyhour.api.commons.dtos.responses.OrderResponse;
 import lyhour.api.commons.dtos.responses.OrderStatusResponseDto;
+import lyhour.api.commons.dtos.responses.PopularItemResponseDto;
 import lyhour.api.entities.OrderStatus;
 import lyhour.api.services.OrderService;
 
@@ -53,6 +54,12 @@ public class OrderController {
     @GetMapping("/status-summary")
     public BaseResponseDto<List<OrderStatusResponseDto>> getOrderStatusSummary() {
         List<OrderStatusResponseDto> data = orderService.getOrderStatusCounts();
+        return BaseResponseDto.success(data);
+    }
+
+    @GetMapping("/popular-items")
+    public BaseResponseDto<List<PopularItemResponseDto>> getPopularItems(@RequestParam(defaultValue = "3") int topN) {
+        List<PopularItemResponseDto> data = orderService.getTopPopularItems(topN);
         return BaseResponseDto.success(data);
     }
 

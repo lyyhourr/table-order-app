@@ -13,9 +13,11 @@ import jakarta.transaction.Transactional;
 import lyhour.api.commons.dtos.responses.OrderItemResponse;
 import lyhour.api.commons.dtos.responses.OrderResponse;
 import lyhour.api.commons.dtos.responses.OrderStatusResponseDto;
+import lyhour.api.commons.dtos.responses.PopularItemResponseDto;
 import lyhour.api.entities.Order;
 import lyhour.api.entities.OrderStatus;
 import lyhour.api.repositories.MenuItemRepository;
+import lyhour.api.repositories.OrderItemRepository;
 import lyhour.api.repositories.OrderRepository;
 import lyhour.api.repositories.OrderRepository.OrderStatusProjection;
 import lyhour.api.repositories.OrderTableRepository;
@@ -26,13 +28,16 @@ public class OrderService {
         private final OrderRepository orderRepository;
         private final MenuItemRepository menuItemRepository;
         private final OrderTableRepository orderTableRepository;
+        private final OrderItemRepository orderItemRepository;
 
         public OrderService(OrderRepository orderRepository,
                         MenuItemRepository menuItemRepository,
-                        OrderTableRepository orderTableRepository) {
+                        OrderTableRepository orderTableRepository,
+                        OrderItemRepository orderItemRepository) {
                 this.orderRepository = orderRepository;
                 this.menuItemRepository = menuItemRepository;
                 this.orderTableRepository = orderTableRepository;
+                this.orderItemRepository = orderItemRepository;
         }
 
         public List<OrderResponse> getOrdersByStatus() {
@@ -109,6 +114,11 @@ public class OrderService {
                 return orderRepository.findAll().stream()
                                 .map(Order::getTotalPrice)
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+
+        public List<PopularItemResponseDto> getTopPopularItems(int topN) {
+                List<PopularItemResponseDto> all = orderItemRepository.findAllPopularItems();
+                return all.stream().limit(topN).toList();
         }
 
 }

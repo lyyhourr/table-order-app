@@ -3,6 +3,7 @@ import api from "@/lib/api-client";
 import DashboardStatCard from "./_components/dashboard-stat-card";
 import OrderStatusChart from "./_components/order-status-chart";
 import { TOrderStatus } from "./orders/_utils/order-utils";
+import PopularItem from "./_components/popular-item";
 
 export default async function Page() {
   const currentHour = new Date().getHours();
@@ -15,6 +16,12 @@ export default async function Page() {
       : "Good Evening";
 
   const { data } = await api.get<TStatusSummary>("/orders/status-summary");
+  const { data: popular } = await api.get<TPopularItem>(
+    "/orders/popular-items",
+    {
+      topN: 5,
+    }
+  );
 
   return (
     <div className="space-y-6 p-6">
@@ -31,14 +38,7 @@ export default async function Page() {
       <div className="grid gap-6 lg:grid-cols-2">
         <OrderStatusChart data={data ?? []} />
 
-        <Card>
-          <CardContent className="flex items-center justify-center h-[400px] text-muted-foreground">
-            <div className="text-center">
-              <p className="text-lg font-medium">More insights coming soon</p>
-              <p className="text-sm mt-2">Additional charts will appear here</p>
-            </div>
-          </CardContent>
-        </Card>
+        <PopularItem data={popular ?? []} />
       </div>
     </div>
   );
@@ -47,4 +47,9 @@ export default async function Page() {
 export type TStatusSummary = {
   status: TOrderStatus;
   value: number;
+}[];
+
+export type TPopularItem = {
+  name: string;
+  totalOrdered: number;
 }[];

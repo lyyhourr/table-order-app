@@ -48,7 +48,7 @@ export default function OrderStatusChart({ data }: { data: TStatusSummary }) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[300px]">
+        <ChartContainer config={chartConfig} className="h-[300px] mx-auto">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <ChartTooltip content={<ChartTooltipContent />} />
