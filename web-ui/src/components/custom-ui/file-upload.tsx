@@ -308,6 +308,7 @@ export default function FileUpload({
             <button
               onClick={() => removeFile(0)}
               className="absolute top-2 right-2 p-2 bg-background/90 hover:bg-background rounded-full transition-colors shadow-lg"
+              type="button"
               aria-label="Remove file and upload new one"
             >
               <X className="w-5 h-5" />
@@ -450,6 +451,7 @@ export default function FileUpload({
                 </div>
 
                 <button
+                  type="button"
                   onClick={() => removeFile(index)}
                   disabled={uploadingFiles.has(index)}
                   className="p-1 hover:bg-background rounded transition-colors disabled:opacity-50"

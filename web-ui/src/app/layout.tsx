@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Food",
-  description: "",
+  title: {
+    default: "R Restaurant",
+    template: "%s | R Restaurant",
+  },
+  description: "java final project",
 };
 
 export default function RootLayout({

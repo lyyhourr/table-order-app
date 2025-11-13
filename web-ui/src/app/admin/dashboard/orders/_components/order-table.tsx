@@ -52,10 +52,11 @@ export default function OrderTable({ data }: { data: TOrders[] }) {
     {
       accessorKey: "totalPrice",
       header: "Total Price",
+      accessorFn: (row) => "$" + row.totalPrice.toFixed(2),
     },
     {
       accessorKey: "createdAt",
-      header: "Created At",
+      header: "Order At",
       accessorFn: (row) => new Date(row.createdAt).toLocaleString(),
     },
     {

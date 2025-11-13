@@ -18,66 +18,66 @@ import lyhour.api.repositories.OrderTableRepository;
 @Service
 public class UserOrderService {
 
-    private final OrderRepository orderRepository;
-    private final MenuItemRepository menuItemRepository;
-    private final OrderTableRepository orderTableRepository;
-    private final TelegramService telegramService;
+        private final OrderRepository orderRepository;
+        private final MenuItemRepository menuItemRepository;
+        private final OrderTableRepository orderTableRepository;
+        private final TelegramService telegramService;
 
-    public UserOrderService(
-            OrderRepository orderRepository,
-            MenuItemRepository menuItemRepository,
-            OrderTableRepository orderTableRepository,
-            TelegramService telegramService) {
-        this.orderRepository = orderRepository;
-        this.menuItemRepository = menuItemRepository;
-        this.orderTableRepository = orderTableRepository;
-        this.telegramService = telegramService;
-    }
-
-    @Transactional
-    public Long createOrder(CreateOrderDto dto, Long tableId) {
-        Order order = new Order();
-        order.setStatus(OrderStatus.PENDING);
-
-        OrderTable table = orderTableRepository.findById(tableId)
-                .orElseThrow(() -> new RuntimeException("Table not found"));
-        order.setOrderTable(table);
-
-        BigDecimal total = BigDecimal.ZERO;
-
-        order.setTotalPrice(total);
-        Order savedOrder = orderRepository.save(order);
-
-        StringBuilder message = new StringBuilder("🍽️ <b>New Order Received</b>\n");
-        message.append("<b>Order ID:</b> ").append(savedOrder.getId())
-                .append("  <b>Table:</b> ").append(table.getName()).append("\n\n");
-
-        for (CreateOrderDto.OrderItemDTO itemDto : dto.getItems()) {
-            MenuItem menuItem = menuItemRepository.findById(itemDto.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Menu item not found"));
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(savedOrder);
-            orderItem.setMenuItem(menuItem);
-            orderItem.setQuantity(itemDto.getQuantity());
-            orderItem.setPrice(menuItem.getPrice());
-
-            total = total.add(orderItem.getSubTotal());
-            savedOrder.getOrderItems().add(orderItem);
-
-            message.append("- ").append(menuItem.getName())
-                    .append(" × ").append(itemDto.getQuantity())
-                    .append(" = $").append(orderItem.getSubTotal())
-                    .append("\n");
+        public UserOrderService(
+                        OrderRepository orderRepository,
+                        MenuItemRepository menuItemRepository,
+                        OrderTableRepository orderTableRepository,
+                        TelegramService telegramService) {
+                this.orderRepository = orderRepository;
+                this.menuItemRepository = menuItemRepository;
+                this.orderTableRepository = orderTableRepository;
+                this.telegramService = telegramService;
         }
 
-        savedOrder.setTotalPrice(total);
-        orderRepository.save(savedOrder);
+        @Transactional
+        public Long createOrder(CreateOrderDto dto, Long tableId) {
+                Order order = new Order();
+                order.setStatus(OrderStatus.PENDING);
 
-        message.append("\n💰 <b>Total Price:</b> $").append(total);
+                OrderTable table = orderTableRepository.findById(tableId)
+                                .orElseThrow(() -> new RuntimeException("Table not found"));
+                order.setOrderTable(table);
 
-        telegramService.sendMessage(message.toString());
+                BigDecimal total = BigDecimal.ZERO;
 
-        return savedOrder.getId();
-    }
+                order.setTotalPrice(total);
+                Order savedOrder = orderRepository.save(order);
+
+                StringBuilder message = new StringBuilder("🍽️ <b>New Order Received</b>\n");
+                message.append("<b>Order ID:</b> ").append(savedOrder.getId())
+                                .append("  <b>Table:</b> ").append(table.getName()).append("\n\n");
+
+                for (CreateOrderDto.OrderItemDTO itemDto : dto.getItems()) {
+                        MenuItem menuItem = menuItemRepository.findById(itemDto.getProductId())
+                                        .orElseThrow(() -> new RuntimeException("Menu item not found"));
+
+                        OrderItem orderItem = new OrderItem();
+                        orderItem.setOrder(savedOrder);
+                        orderItem.setMenuItem(menuItem);
+                        orderItem.setQuantity(itemDto.getQuantity());
+                        orderItem.setPrice(menuItem.getPrice());
+
+                        total = total.add(orderItem.getSubTotal());
+                        savedOrder.getOrderItems().add(orderItem);
+
+                        message.append("- ").append(menuItem.getName())
+                                        .append(" × ").append(itemDto.getQuantity())
+                                        .append(" = $").append(orderItem.getSubTotal())
+                                        .append("\n");
+                }
+
+                savedOrder.setTotalPrice(total);
+                orderRepository.save(savedOrder);
+
+                message.append("\n💰 <b>Total Price:</b> $").append(total);
+
+                telegramService.sendMessage(message.toString());
+
+                return savedOrder.getId();
+        }
 }
